@@ -1,3 +1,6 @@
+use nct;
+
+
 INSERT INTO `nct`.`infrcodegroup`
 (
 `ifcgName`,
@@ -40,8 +43,8 @@ INSERT INTO `nct`.`infrcode`
 `infrCodeGroup_ifcgSeq`)
 VALUES
 (
-16,
-"회원전화 통신사",
+29,
+"회원보안질문",
 1,
 1,
 0,
@@ -49,7 +52,7 @@ now(),
 now(),
 now(),
 now(),
-9
+15
 );
 
 update infrCode
@@ -64,6 +67,17 @@ from infrCodeGroup a
 left join infrCode b on b.infrCodeGroup_ifcgSeq = a.ifcgSeq
 order by a.ifcgSeq, b.ifcdOrder;
 
+select a.ifcgSeq, a.ifcgName,
+b.ifcdSeq, b.ifcdName, b.ifcdOrder ,b.ifcdUseNy
+    ,b.ifcdDelNy
+from infrCodeGroup a
+left join infrCode b on b.ifcgSeq = a.ifcgSeq
+where 1 = 1
+	and a.ifcgDelNy = 0
+    and a.ifcgUseNy = 1
+    and b.ifcdDelNy = 0
+    and b.ifcdUseNy = 1
+order by a.ifcgSeq asc, b.ifcdOrder desc;
 
 
 delete from infrCode
